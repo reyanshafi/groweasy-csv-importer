@@ -105,6 +105,7 @@ The system prompt (see [`backend/src/services/ai.service.ts`](backend/src/servic
 | `CORS_ORIGIN` | backend | `*` | Comma-separated allowed origins |
 | `BATCH_SIZE` / `BATCH_CONCURRENCY` / `AI_MAX_RETRIES` | backend | `100` / `3` / `3` | AI pipeline tuning |
 | `MAX_ROWS` / `MAX_FILE_SIZE_MB` | backend | `2000` / `10` | Upload limits |
+| `IMPORT_RATE_LIMIT` / `IMPORT_RATE_WINDOW_MIN` | backend | `5` / `10` | Per-IP cap on AI imports (passthrough exempt); `0` disables |
 | `NEXT_PUBLIC_API_URL` | frontend | `http://localhost:4000` | Backend base URL |
 
 ## Docker
