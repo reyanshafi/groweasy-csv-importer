@@ -61,7 +61,7 @@ export default function RootLayout({
         </header>
         <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6">{children}</main>
         <footer className="border-t border-zinc-200 py-4 text-center text-xs text-zinc-500 dark:border-zinc-800 dark:text-zinc-400">
-          GrowEasy assignment - maps any CSV into CRM leads with Gemini · ©{" "}
+          ©{" "}
           {new Date().getFullYear()}{" "}
           <a
             href="https://rayanshafi.dev"
