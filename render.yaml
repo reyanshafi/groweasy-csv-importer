@@ -1,0 +1,20 @@
+# Render blueprint — deploys the backend API.
+# In the Render dashboard: New → Blueprint → point at this repo, then set the
+# two "sync: false" env vars by hand (they are secrets / deploy-specific).
+services:
+  - type: web
+    name: groweasy-csv-importer-api
+    runtime: node
+    rootDir: backend
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false # paste your key in the dashboard
+      - key: CORS_ORIGIN
+        sync: false # set to your Vercel URL, e.g. https://your-app.vercel.app
+      - key: GEMINI_MODEL
+        value: gemini-3.1-flash-lite
+      - key: BATCH_SIZE
+        value: "100"
