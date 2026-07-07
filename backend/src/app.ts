@@ -8,6 +8,8 @@ export function createApp(): express.Express {
   const app = express();
 
   app.disable("x-powered-by");
+  // Render/Railway/Vercel sit behind a proxy — trust it so req.ip is the real client.
+  app.set("trust proxy", 1);
   app.use(
     cors({
       origin: config.corsOrigin === "*" ? true : config.corsOrigin.split(","),

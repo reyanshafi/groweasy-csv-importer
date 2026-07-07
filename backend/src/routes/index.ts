@@ -1,6 +1,7 @@
 import { Router } from "express";
 import multer from "multer";
 import { importCsv } from "../controllers/import.controller.js";
+import { importRateLimit } from "../middleware/rateLimit.js";
 import { config } from "../config.js";
 import { ApiError } from "../middleware/error.js";
 
@@ -24,4 +25,4 @@ apiRouter.get("/health", (_req, res) => {
   res.json({ status: "ok", model: config.geminiModel, aiConfigured: Boolean(config.geminiApiKey) });
 });
 
-apiRouter.post("/import", upload.single("file"), importCsv);
+apiRouter.post("/import", importRateLimit, upload.single("file"), importCsv);

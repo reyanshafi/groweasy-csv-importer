@@ -2,6 +2,7 @@ import type { Request, Response } from "express";
 import { config } from "../config.js";
 import { isCrmFormatHeaders, type ImportEvent } from "../domain/crm.js";
 import { ApiError } from "../middleware/error.js";
+import { recordAiImport } from "../middleware/rateLimit.js";
 import { parseCsvBuffer } from "../services/csv.service.js";
 import { runImport } from "../services/import.service.js";
 
@@ -18,8 +19,9 @@ export async function importCsv(req: Request, res: Response): Promise<void> {
   }
 
   const { headers, rows } = parseCsvBuffer(req.file.buffer);
+  const isPassthrough = isCrmFormatHeaders(headers);
   // CRM-format files are validated without AI, so they work even without a key.
-  if (!config.geminiApiKey && !isCrmFormatHeaders(headers)) {
+  if (!config.geminiApiKey && !isPassthrough) {
     throw new ApiError(500, "Server is missing GEMINI_API_KEY — AI extraction is unavailable.");
   }
   if (rows.length > config.maxRows) {
@@ -31,6 +33,9 @@ export async function importCsv(req: Request, res: Response): Promise<void> {
 
   res.setHeader("Content-Type", "application/x-ndjson; charset=utf-8");
   res.setHeader("Cache-Control", "no-cache, no-transform");
+  // Only AI imports count against the per-IP budget — passthrough costs nothing.
+  if (!isPassthrough) recordAiImport(req);
+
   res.setHeader("X-Accel-Buffering", "no"); // disable proxy buffering so progress arrives live
   res.flushHeaders();
 
