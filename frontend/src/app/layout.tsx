@@ -71,6 +71,7 @@ export default function RootLayout({
           >
             Rayan Shafi
           </a>
+          . All rights reserved.
         </footer>
       </body>
     </html>
