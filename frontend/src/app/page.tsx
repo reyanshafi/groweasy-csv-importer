@@ -4,11 +4,15 @@ import Link from "next/link";
 export default function LandingPage() {
   return (
     <div className="relative">
-      {/* decorative background: grid + emerald glow */}
-      <div aria-hidden className="hero-grid absolute inset-x-0 -top-8 bottom-0 -z-10" />
+      {/* decorative background: top grid + emerald glows */}
+      <div aria-hidden className="hero-grid absolute inset-x-0 -top-8 -z-10 h-[34rem]" />
       <div
         aria-hidden
         className="absolute left-1/2 top-0 -z-10 h-64 w-[36rem] max-w-full -translate-x-1/2 rounded-full bg-emerald-500/10 blur-3xl dark:bg-emerald-500/15"
+      />
+      <div
+        aria-hidden
+        className="absolute bottom-0 left-1/2 -z-10 h-72 w-[40rem] max-w-full -translate-x-1/2 translate-y-1/2 rounded-full bg-emerald-500/10 blur-3xl dark:bg-emerald-500/15"
       />
 
       <section className="mx-auto flex max-w-3xl flex-col items-center px-2 py-10 text-center sm:py-16">
@@ -70,7 +74,7 @@ export default function LandingPage() {
         </div>
       </div>
 
-      <ul className="mt-14 grid w-full gap-4 text-left sm:grid-cols-3">
+      <ul className="mt-14 grid w-full divide-y divide-zinc-200 overflow-hidden rounded-lg border border-zinc-200 text-left dark:divide-zinc-800 dark:border-zinc-800 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
         <FeatureCard
           title="Any format"
           description="No fixed column names — the AI reads your layout, whatever tool exported it."
@@ -102,12 +106,14 @@ function FeatureCard({
   icon: React.ReactNode;
 }) {
   return (
-    <li className="group rounded-xl border border-zinc-200 bg-white/80 p-5 backdrop-blur transition-all hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-lg hover:shadow-emerald-500/5 dark:border-zinc-800 dark:bg-zinc-900/80 dark:hover:border-emerald-800">
-      <span className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-100 text-emerald-600 transition-colors group-hover:bg-emerald-600 group-hover:text-white dark:bg-emerald-900/50 dark:text-emerald-400 dark:group-hover:bg-emerald-600 dark:group-hover:text-white">
+    <li className="bg-white p-6 dark:bg-zinc-900">
+      <span className="mb-4 flex h-8 w-8 items-center justify-center text-emerald-700 dark:text-emerald-500">
         {icon}
       </span>
-      <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{title}</p>
-      <p className="mt-1.5 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">
+      <p className="text-sm font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
+        {title}
+      </p>
+      <p className="mt-2 text-sm leading-relaxed text-zinc-500 dark:text-zinc-400">
         {description}
       </p>
     </li>
